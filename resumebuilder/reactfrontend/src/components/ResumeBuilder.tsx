@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 interface ResumeField {
@@ -46,6 +46,15 @@ const ResumeBuilder: React.FC = () => {
       setCurrentField(currentField + 1);
     } else {
       botMessage = "Thank you! I have all the information needed to build your resume.";
+      //send resume to flask backend?
+      fetch('http://localhost:5000/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields)
+      })
+      .then(res => res.json())
+      .then(data => console.log('Server response:', data))
+      .catch(err => console.error('Error submitting resume:', err));
     }
 
     // Add bot response
