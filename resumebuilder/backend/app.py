@@ -1,18 +1,17 @@
-from flask import render_template, Flask
+from flask import Flask
+from flask_cors import CORS
+from routes.auth import auth_bp
+from routes.user_profile import profile_bp
+from routes.pages import pages_bp
+
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/create_account', methods=['POST'])
-def home():
-    return render_template('home.html')
-
-@app.route('/')
-def home():
-    return render_template('home.html')
+# Register route groups
+app.register_blueprint(auth_bp)
+app.register_blueprint(profile_bp)
+app.register_blueprint(pages_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
